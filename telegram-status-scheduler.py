@@ -1,10 +1,17 @@
 import asyncio
+import logging
 import os
 from enum import Enum
 
 from pyrogram import Client, types
 import uvloop
 import aiocron
+
+
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 
 class EmojiStatus(Enum):
@@ -16,6 +23,7 @@ class EmojiStatus(Enum):
 
 
 def setup_cron():
+    logging.info('Setup cron schedule')
     """Declare scheduler cron-like rules here"""
     # Work - Weekdays from 11:15
     aiocron.crontab('15 11 * * 1-5', func=set_emoji_status, args=(EmojiStatus.WORK,), start=True)
@@ -28,16 +36,21 @@ def setup_cron():
 
 
 async def set_emoji_status(emoji: EmojiStatus):
+    logging.info('Set emoji status {}'.format(emoji.name))
+
     client_name = 'telegram'
     api_id = os.environ['TELEGRAM_API_ID']
     api_hash = os.environ['TELEGRAM_API_HASH']
 
     async with Client(client_name, api_id, api_hash) as telegram:
-        await telegram.set_emoji_status(
+        result = await telegram.set_emoji_status(
             types.EmojiStatus(custom_emoji_id=emoji.value))
+        if result is not True:
+            logging.error('Cannot set emoji status')
 
 
 async def main():
+    logging.info('Start scheduler')
     setup_cron()
     while True:
         await asyncio.sleep(1)
