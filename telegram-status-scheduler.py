@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import zoneinfo
 import os
 from enum import Enum
 
@@ -23,16 +24,18 @@ class EmojiStatus(Enum):
 
 
 def setup_cron():
-    logging.info('Setup cron schedule')
     """Declare scheduler cron-like rules here"""
+    logging.info('Setup cron schedule')
+    tz = zoneinfo.ZoneInfo("Europe/Moscow")
+    
     # Work - Weekdays from 11:15
-    aiocron.crontab('15 11 * * 1-5', func=set_emoji_status, args=(EmojiStatus.WORK,), start=True)
+    aiocron.crontab('15 11 * * 1-5', func=set_emoji_status, args=(EmojiStatus.WORK,), start=True, tz=tz)
     # Rest - Weekdays from 20:00
-    aiocron.crontab('0 20 * * 1-5', func=set_emoji_status, args=(EmojiStatus.REST,), start=True)
+    aiocron.crontab('0 20 * * 1-5', func=set_emoji_status, args=(EmojiStatus.REST,), start=True, tz=tz)
     # Rest - Weekend from 12:00
-    aiocron.crontab('0 12 * * 6-7', func=set_emoji_status, args=(EmojiStatus.REST,), start=True)
+    aiocron.crontab('0 12 * * 6-7', func=set_emoji_status, args=(EmojiStatus.REST,), start=True, tz=tz)
     # Sleep - Every day from 23:00
-    aiocron.crontab('0 23 * * *', func=set_emoji_status, args=(EmojiStatus.SLEEP,), start=True)
+    aiocron.crontab('0 23 * * *', func=set_emoji_status, args=(EmojiStatus.SLEEP,), start=True, tz=tz)
 
 
 async def set_emoji_status(emoji: EmojiStatus):
