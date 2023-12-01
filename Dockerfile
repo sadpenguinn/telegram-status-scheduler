@@ -17,5 +17,6 @@ COPY --from=compiler /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 COPY main.py /app/
+COPY config.yaml /app/
 
 ENTRYPOINT ["python3", "/app/main.py"]
