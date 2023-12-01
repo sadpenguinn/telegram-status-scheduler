@@ -2,3 +2,5 @@ Pyrogram==2.0.96
 TgCrypto==1.1.1
 uvloop==0.17.0
 aiocron==1.8
+PyYAML==6.0.1
+python-dotenv==1.0.0

@@ -1,0 +1,14 @@
+emoji:
+  work: 5249273776079640466
+  rest: 5246842176050046092
+  sleep: 5247100325059370738
+  eat: 5244508282231465075
+  empty: 0
+
+schedule:
+  # Weekdays from 11:15
+  work: ["15 11 * * 1-5"]
+  # Weekdays from 20:00 and Weekends from 12:00
+  rest: ["0 20 * * 1-5", "0 12 * * 6-7"]
+  # Every day from 23:00
+  sleep: ["0 23 * * *"]

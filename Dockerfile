@@ -16,8 +16,6 @@ WORKDIR /app/
 COPY --from=compiler /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+COPY main.py /app/
 
-COPY telegram-status-scheduler.py /app/
-COPY telegram.session /app/
-
-ENTRYPOINT ["python3", "/app/telegram-status-scheduler.py"]
+ENTRYPOINT ["python3", "/app/main.py"]
