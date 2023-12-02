@@ -8,7 +8,7 @@ Change telegram emoji statuses by schedule.
 
 ### Telegram API
 
-Provide credentials with `TELEGRAM_API_ID` and `TELEGRAM_API_HASH`.
+Provide credentials with `TELEGRAM_API_ID`, `TELEGRAM_API_HASH`, `TELEGRAM_PHONE_NUMBER` and `TELEGRAM_PASSWORD`.
 
 ## Build & Run
 

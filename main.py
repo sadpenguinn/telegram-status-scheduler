@@ -43,7 +43,7 @@ async def set_emoji_status(emoji: int):
     api_id = os.environ['TELEGRAM_API_ID']
     api_hash = os.environ['TELEGRAM_API_HASH']
 
-    async with Client(':memory:', api_id, api_hash) as telegram:
+    async with Client(name='telegram', api_id=api_id, api_hash=api_hash, phone_number=phone_number, password=password) as telegram:
         result = await telegram.set_emoji_status(
             types.EmojiStatus(custom_emoji_id=emoji))
         if result is not True:
